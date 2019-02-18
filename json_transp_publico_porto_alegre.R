@@ -63,10 +63,21 @@ paradas[1, ]
 paradas$latitude = as.numeric(as.character(paradas$latitude))
 paradas$longitude  = as.numeric(as.character(paradas$longitude))
 
+loop = c(1:length(paradas$codigo))
+
+for(i in loop){
+  paradas$IdLinha[i] = paradas$linhas[[i]][1]
+  paradas$codLinha[i] = paradas$linhas[[i]][2]
+  paradas$nomeLinha[i] = paradas$linhas[[i]][3]
+}
+
+
+View(head(paradas))
+
 map <- leaflet(data = paradas) %>%
   addTiles() %>%
   addPolylines(aa[, 2],aa[, 1],weight=2.25,color="red")  %>%
-  addCircles(~paradas$longitude, ~paradas$latitude, popup=~paste("<br>a", linhas[[1]], "<br>b", linhas[[3]],  sep = " "),
+  addCircles(~paradas$longitude, ~paradas$latitude, popup=~paste("<br>Id", IdLinha, "<br>Cod", codLinha, "<br>Nome", nomeLinha,  sep = " "),
              weight = 1, radius=20, color= 'blue', stroke = TRUE, fillOpacity = 0.8)
 map
 head(paradas)
@@ -81,5 +92,6 @@ map <- leaflet(data = paradas) %>%
   addCircles(~paradas$longitude, ~paradas$latitude, popup=~paste("Dados: ", paradas$linhas[],  sep = " "),
              weight = 1, radius=20, color= 'blue', stroke = TRUE, fillOpacity = 0.8)
 map
+
 
 
